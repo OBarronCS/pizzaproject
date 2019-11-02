@@ -9,12 +9,17 @@ from .forms import SignUpForm
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
+
     context = {
         "user": request.user
     }
+
     return render(request, "orders/index.html", context)
 
+
 def login_view(request):
+
+
     # IF USER IS already logged in, redirect home
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
