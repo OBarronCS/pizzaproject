@@ -18,8 +18,6 @@ def index(request):
 
 
 def login_view(request):
-
-
     # IF USER IS already logged in, redirect home
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
