@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import SignUpForm
+from .models import *
 
 # Create your views here.
 def index(request):
@@ -16,6 +17,16 @@ def index(request):
 
     return render(request, "orders/index.html", context)
 
+
+def shop_view(request):
+
+    context = {
+        'pizzatoppings' : Topping.objects.all(),
+        'submaintoppings' : SubMainTopping.objects.all(),
+        'subsubtoppings' : SubSubTopping.objects.all()
+    }
+
+    return render(request, "orders/shop.html", context)
 
 def login_view(request):
     # IF USER IS already logged in, redirect home

@@ -3,8 +3,54 @@
   <head>
     <meta>
     <title>Shop</title>
+    <style>
+      div {
+        display: flex;
+        flex-wrap: wrap;
+        border : black 1px solid;
+      }
+    </style>
   </head>
   <body>
-    <h3>This URL will be reserved for the menu</h3>
+
+    <h2>Pizza</h2>
+    <div class="pizza">
+        <h4>Size</h4>
+        <input type="radio" name="size" value="S"> Small <br>
+        <input type="radio" name="size" value="L"> Large
+
+        <h4>Type</h4>
+        <input type="radio" name="type" value="R"> Regular <br>
+        <input type="radio" name="type" value="S"> Sicilian
+        <h6>Hold CTRL, and select up to 3 toppings</h6>
+
+        <select multiple>
+          {% for topping in pizzatoppings %}
+            <option value="topping">{{ topping }}</li>
+          {% endfor %}
+        </select>
+    </div>
+
+    <div class="subs">
+      <h4>Size</h4>
+      <input type="radio" name="size" value="S"> Small <br>
+      <input type="radio" name="size" value="L"> Large
+
+      <h6>Select a main toppings</h6>
+
+      <select>
+        {% for topping in submaintoppings %}
+          <option value="topping">{{ topping }}</li>
+        {% endfor %}
+      </select>
+
+      <h6>Added some other toppings</h6>
+
+      <select>
+        {% for topping in subsubtoppings %}
+          <option value="topping">{{ topping }}</li>
+        {% endfor %}
+      </select>
+    </div>
   </body>
 </html>
