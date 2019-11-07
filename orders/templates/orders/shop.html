@@ -3,6 +3,31 @@
   <head>
     <meta>
     <title>Shop</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelector("#pizzaform").onsubmit = () =>{
+            const request = new XMLHttpRequest();
+            request.open('POST','{% url "addtocart" %}')
+
+            request.onload = () => {
+              const data = JSON.parse(request.reponseText)
+              if(data.success){
+                alert("Successful order!")
+              }
+            }
+
+            const data = new FormData();
+            data.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+            data.append('size',document.querySelector("input[name=size]:checked").value)
+            data.append('type',document.querySelector("input[name=type]:checked").value)
+
+            request.send(data);
+
+            return false;
+          }
+        })
+    </script>
+
     <style>
       div {
         display: flex;
@@ -15,6 +40,8 @@
 
     <h2>Pizza</h2>
     <div class="pizza">
+      <form id="pizzaform" method="post">
+        {% csrf_token %}
         <h4>Size</h4>
         <input type="radio" name="size" value="S"> Small <br>
         <input type="radio" name="size" value="L"> Large
@@ -22,13 +49,17 @@
         <h4>Type</h4>
         <input type="radio" name="type" value="R"> Regular <br>
         <input type="radio" name="type" value="S"> Sicilian
-        <h6>Hold CTRL, and select up to 3 toppings</h6>
+        {% for i in '123'|make_list %}
+        <h6>Topping {{ i }}</h6>
+          <select id="pizzatopping1">
+            {% for topping in pizzatoppings %}
+              <option value= '{{ topping }}'>{{ topping }}</li>
+            {% endfor %}
+          </select>
+        {% endfor %}
+        <button name="pizzabutton">Add to shopping cart!</button>
 
-        <select multiple>
-          {% for topping in pizzatoppings %}
-            <option value="topping">{{ topping }}</li>
-          {% endfor %}
-        </select>
+      </form>
     </div>
 
     <div class="subs">

@@ -18,6 +18,18 @@ def index(request):
     return render(request, "orders/index.html", context)
 
 
+def add_to_cart(request):
+    if request.POST.get('action') == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        response_data['title'] = title
+        response_data['description'] = description
+
+        print("asigdvuasd")
+        return JsonResponse({"success" : True})
+
+
 def shop_view(request):
 
     context = {
