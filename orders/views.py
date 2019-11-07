@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import SignUpForm
@@ -19,12 +19,10 @@ def index(request):
 
 
 def add_to_cart(request):
-    if request.POST.get('action') == 'POST':
+    print("asdhaisdv")
+    if request.method == "POST":
         title = request.POST.get('title')
         description = request.POST.get('description')
-
-        response_data['title'] = title
-        response_data['description'] = description
 
         print("asigdvuasd")
         return JsonResponse({"success" : True})

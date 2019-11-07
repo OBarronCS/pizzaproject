@@ -5,9 +5,9 @@
     <title>Shop</title>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-          document.querySelector("#pizzaform").onsubmit = () =>{
+          document.querySelector("#pizzabutton").onclick = () => {
             const request = new XMLHttpRequest();
-            request.open('POST','{% url "addtocart" %}')
+            request.open('POST','/addtocart')
 
             request.onload = () => {
               const data = JSON.parse(request.reponseText)
@@ -23,7 +23,7 @@
 
             request.send(data);
 
-            return false;
+            return false
           }
         })
     </script>
@@ -40,7 +40,8 @@
 
     <h2>Pizza</h2>
     <div class="pizza">
-      <form id="pizzaform" method="post">
+
+      <div id="pizzaform">
         {% csrf_token %}
         <h4>Size</h4>
         <input type="radio" name="size" value="S"> Small <br>
@@ -57,9 +58,9 @@
             {% endfor %}
           </select>
         {% endfor %}
-        <button name="pizzabutton">Add to shopping cart!</button>
+        <button id="pizzabutton">Add to shopping cart!</button>
 
-      </form>
+      </div>
     </div>
 
     <div class="subs">
