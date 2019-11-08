@@ -32,6 +32,9 @@ def add_to_cart(request):
         print(topping2)
         print(topping3)
 
+        f = Pizza()
+
+
         # request.user
         # this refers to the user logged in. use it ot make orders work!
 
