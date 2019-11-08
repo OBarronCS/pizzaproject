@@ -19,13 +19,20 @@ def index(request):
 
 
 def add_to_cart(request):
-    print("asdhaisdv")
     if request.method == "POST":
-        title = request.POST.get('title')
-        description = request.POST.get('description')
+        size = request.POST.get('size')
+        type = request.POST.get('type')
+        topping1 = request.POST.get('topping1')
+        topping2 = request.POST.get('topping2')
+        topping3 = request.POST.get('topping3')
 
-        print("asigdvuasd")
-        return JsonResponse({"success" : True})
+        print(size)
+        print(type)
+        print(topping1)
+        print(topping2)
+        print(topping3)
+        
+        return JsonResponse({"success" : "true"})
 
 
 def shop_view(request):

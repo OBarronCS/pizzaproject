@@ -5,12 +5,35 @@
     <title>Shop</title>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+          function buttoncheck(name){
+            var radios = document.getElementsByName(name);
+            for (var i = 0, len = radios.length; i < len; i++) {
+              if (radios[i].checked) {
+                return true;
+              }
+            }
+            return false;
+          }
+
           document.querySelector("#pizzabutton").onclick = () => {
+
+            //checks that a size has been selected
+            if(!buttoncheck('size')){
+              alert('Select a size for the pizza')
+              return;
+            }
+
+            if(!buttoncheck("type")){
+              alert('Select a type for the pizza')
+              return;
+            }
+
+
             const request = new XMLHttpRequest();
             request.open('POST','/addtocart')
 
             request.onload = () => {
-              const data = JSON.parse(request.reponseText)
+              const data = JSON.parse(request.responseText)
               if(data.success){
                 alert("Successful order!")
               }
@@ -20,7 +43,10 @@
             data.append('csrfmiddlewaretoken', '{{ csrf_token }}')
             data.append('size',document.querySelector("input[name=size]:checked").value)
             data.append('type',document.querySelector("input[name=type]:checked").value)
-
+            data.append('topping1',document.querySelector("#pizzatopping1").value)
+            data.append('topping2',document.querySelector("#pizzatopping2").value)
+            data.append('topping3',document.querySelector("#pizzatopping3").value)
+            
             request.send(data);
 
             return false
@@ -50,9 +76,13 @@
         <h4>Type</h4>
         <input type="radio" name="type" value="R"> Regular <br>
         <input type="radio" name="type" value="S"> Sicilian
+
+
+
         {% for i in '123'|make_list %}
         <h6>Topping {{ i }}</h6>
-          <select id="pizzatopping1">
+          <select id="pizzatopping{{i}}">
+            <option value=''>No topping</li>
             {% for topping in pizzatoppings %}
               <option value= '{{ topping }}'>{{ topping }}</li>
             {% endfor %}
