@@ -139,3 +139,4 @@ class OrderItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     orders =  models.ManyToManyField(OrderItem, blank = True, related_name='order')
+    progress = models.models.DecimalField(max_digits=3, decimal_places=2)

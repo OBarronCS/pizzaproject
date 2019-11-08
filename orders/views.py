@@ -31,7 +31,11 @@ def add_to_cart(request):
         print(topping1)
         print(topping2)
         print(topping3)
-        
+
+        # request.user
+        # this refers to the user logged in. use it ot make orders work!
+
+
         return JsonResponse({"success" : "true"})
 
 
