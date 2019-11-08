@@ -1,6 +1,8 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
+
+
 
 
 
@@ -125,3 +127,15 @@ class Platter(models.Model):
 
     def __str__(self):
         return f"{self.ingrediant}, {self.size}";
+
+
+class OrderItem(models.Model):
+    pizza =  models.ForeignKey(Pizza, on_delete=models.CASCADE, null = True)
+    sub =  models.ForeignKey(Sub, on_delete=models.CASCADE, null = True)
+    pasta =  models.ForeignKey(Pasta, on_delete=models.CASCADE, null = True)
+    salad =  models.ForeignKey(Salad, on_delete=models.CASCADE, null = True)
+    platter =  models.ForeignKey(Platter, on_delete=models.CASCADE, null = True)
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    orders =  models.ManyToManyField(OrderItem, blank = True, related_name='order')
