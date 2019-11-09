@@ -32,9 +32,72 @@ def add_to_cart(request):
         print(topping2)
         print(topping3)
 
-        # request.user
-        # this refers to the user logged in. use it ot make orders work!
+        # some code on school computer didn't get pushed for some reason :(
 
+        pizza = Pizza(size = size, type = type)
+
+        finalprice = 0.0;
+        toppingnum = 0;
+
+        if(topping1 != ""):
+            pizza.toppings.add(topping1)
+            toppingnum++;
+
+        if(topping2 != ""):
+            pizza.toppings.add(topping2)
+            toppingnum++;
+
+        if(topping3 != ""):
+            pizza.toppings.add(topping3)
+            toppingnum++;
+
+        if(type = "R"):
+            if(size == "S"):
+                if(toppingnum == 0):
+                    finalprice = 12.7
+                if(toppingnum == 1):
+                    finalprice = 13.7
+                if(toppingnum == 2):
+                    finalprice = 15.2
+                if(toppingnum == 3):
+                    finalprice = 16.2
+            elif(size == "L"):
+                if(toppingnum == 0):
+                    finalprice = 17.95
+                if(toppingnum == 1):
+                    finalprice = 19.95
+                if(toppingnum == 2):
+                    finalprice = 21.95
+                if(toppingnum == 3):
+                    finalprice = 23.95
+        if(type = "S"):
+            if(size == "S"):
+                if(toppingnum == 0):
+                    finalprice = 24.45
+                if(toppingnum == 1):
+                    finalprice = 26.45
+                if(toppingnum == 2):
+                    finalprice = 28.45
+                if(toppingnum == 3):
+                    finalprice = 29.45
+            elif(size == "L"):
+                if(toppingnum == 0):
+                    finalprice = 38.70
+                if(toppingnum == 1):
+                    finalprice = 40.70
+                if(toppingnum == 2):
+                    finalprice = 42.70
+                if(toppingnum == 3):
+                    finalprice = 44.70
+
+        pizza.finalprice = finalprice;
+
+        orderItem = OrderItem(pizza = pizza)
+
+        order = Order(user = request.user, progress = 0)
+        order.orders.add(orderItem)
+
+        print(order)
 
         return JsonResponse({"success" : "true"})
 

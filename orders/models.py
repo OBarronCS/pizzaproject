@@ -1,9 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
-
-
-
 
 
 class Topping(models.Model):
@@ -130,13 +126,22 @@ class Platter(models.Model):
 
 
 class OrderItem(models.Model):
-    pizza =  models.ForeignKey(Pizza, on_delete=models.CASCADE, null = True)
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, null = True)
     sub =  models.ForeignKey(Sub, on_delete=models.CASCADE, null = True)
     pasta =  models.ForeignKey(Pasta, on_delete=models.CASCADE, null = True)
     salad =  models.ForeignKey(Salad, on_delete=models.CASCADE, null = True)
     platter =  models.ForeignKey(Platter, on_delete=models.CASCADE, null = True)
 
+    def __str__(self):
+        for item in self._meta.get_all_field_names():
+            if(item != null):
+                return item;
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     orders =  models.ManyToManyField(OrderItem, blank = True, related_name='order')
-    progress = models.models.DecimalField(max_digits=3, decimal_places=2)
+    progress = models.DecimalField(max_digits=3, decimal_places=2)
+
+    def __str__(self):
+        for item in self.orders.all():
+            print(item)
