@@ -125,7 +125,7 @@ def cart_view(request):
     user = request.user
 
     context = {
-        'user' : user,
+        #'user' : user,
         "orders" : Order.objects.filter(user = user)
     }
 
