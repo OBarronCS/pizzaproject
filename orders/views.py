@@ -32,6 +32,7 @@ def add_to_cart(request):
         print(topping2)
         print(topping3)
 
+<<<<<<< HEAD
         # some code on school computer didn't get pushed for some reason :(
 
         pizza = Pizza(size = size, type = type)
@@ -98,6 +99,14 @@ def add_to_cart(request):
         order.orders.add(orderItem)
 
         print(order)
+=======
+        f = Pizza()
+
+
+        # request.user
+        # this refers to the user logged in. use it ot make orders work!
+
+>>>>>>> 76ad4f131f98b655cd3307980cbfc594c18853d0
 
         return JsonResponse({"success" : "true"})
 
