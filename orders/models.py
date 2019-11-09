@@ -38,10 +38,14 @@ class Pizza(models.Model):
     def __str__(self):
         alltoppings = "";
 
-        for top in self.toppings.all():
-            alltoppings += top.__str__() + ', '
+        for topping in self.toppings.all():
+            alltoppings += topping.__str__() + ' and '
 
-        return f"{self.type} Pizza: {alltoppings}";
+        alltoppings = alltoppings[:-4]
+
+        if(alltoppings == ""):
+            alltoppings = "no toppings"
+        return f"a {self.get_size_display()}, {self.get_type_display()} Pizza with: {alltoppings}";
 
 class SubMainTopping(models.Model):
     name = models.CharField(max_length = 64)
@@ -122,7 +126,7 @@ class Platter(models.Model):
     cost = models.DecimalField(max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.ingrediant}, {self.size}";
+        return f"{self.ingrediant}, {self.get_size_display()}";
 
 
 class OrderItem(models.Model):
@@ -133,15 +137,16 @@ class OrderItem(models.Model):
     platter =  models.ForeignKey(Platter, on_delete=models.CASCADE, null = True)
 
     def __str__(self):
-        for item in self._meta.get_all_field_names():
-            if(item != null):
-                return item;
+        list = [self.pizza, self.sub, self.pasta, self.salad, self.platter]
+        for item in list:
+            if(item is not None):
+                return item.__str__()
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     orders =  models.ManyToManyField(OrderItem, blank = True, related_name='order')
-    progress = models.DecimalField(max_digits=3, decimal_places=2)
+    progress = models.DecimalField(max_digits=3, decimal_places=2, default = 0)
 
     def __str__(self):
         for item in self.orders.all():
-            print(item)
+            return item.__str__()

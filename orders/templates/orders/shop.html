@@ -15,7 +15,7 @@
             return false;
           }
 
-          document.querySelector("#pizzabutton").onclick = () => {
+          document.querySelector("#pizzabutton").onclick = function() {
 
             //checks that a size has been selected
             if(!buttoncheck('size')){
@@ -28,14 +28,15 @@
               return;
             }
 
-
+            this.disabled = true;
             const request = new XMLHttpRequest();
             request.open('POST','/addtocart')
 
             request.onload = () => {
+              this.disabled = false;
               const data = JSON.parse(request.responseText)
               if(data.success){
-                alert("Successful order!")
+                alert(`Successful order! You got at ${data.orderitem}` )
               }
             }
 
@@ -46,7 +47,7 @@
             data.append('topping1',document.querySelector("#pizzatopping1").value)
             data.append('topping2',document.querySelector("#pizzatopping2").value)
             data.append('topping3',document.querySelector("#pizzatopping3").value)
-            
+
             request.send(data);
 
             return false
@@ -64,6 +65,7 @@
   </head>
   <body>
 
+    <li><a href="{% url 'cart' %}">View your shopping cart</a></li>
     <h2>Pizza</h2>
     <div class="pizza">
 

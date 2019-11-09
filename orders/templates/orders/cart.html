@@ -2,9 +2,23 @@
 <html>
   <head>
     <title>Shopping Cart</title>
+    <script>
+
+    </script>
   </head>
   <body>
-    //this will display the contents of ones cart, and throgh it orders will be made official
-    //make seperate class ORDER model which has reference to user in
-    //database and holds the info about a order. Each order can have multiple orderitems  </body>
+    <h3>Item's in your shopping cart, {{user}}!</h3>
+    <button>Order all!</button>
+
+    <li><a href="{% url 'shop' %}">Back to ordering</a></li>
+
+    <ol>
+    {% for order in orders %}
+      <li>
+        {{ order }}
+        <button name="button">Delete from cart</button>
+      </li>
+    {% endfor %}
+      </ol>
+  </body>
 <html>

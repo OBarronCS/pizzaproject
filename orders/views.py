@@ -40,18 +40,15 @@ def add_to_cart(request):
         toppingnum = 0;
 
         if(topping1 != ""):
-            pizza.toppings.add(topping1)
             toppingnum += 1
 
         if(topping2 != ""):
-            pizza.toppings.add(topping2)
             toppingnum += 1
 
         if(topping3 != ""):
-            pizza.toppings.add(topping3)
             toppingnum += 1
 
-        if(type = "R"):
+        if(type == "R"):
             if(size == "S"):
                 if(toppingnum == 0):
                     finalprice = 12.7
@@ -70,7 +67,7 @@ def add_to_cart(request):
                     finalprice = 21.95
                 if(toppingnum == 3):
                     finalprice = 23.95
-        if(type = "S"):
+        if(type == "S"):
             if(size == "S"):
                 if(toppingnum == 0):
                     finalprice = 24.45
@@ -90,17 +87,50 @@ def add_to_cart(request):
                 if(toppingnum == 3):
                     finalprice = 44.70
 
-        pizza.finalprice = finalprice;
+        pizza.cost = finalprice;
+        pizza.save();
+
+        if(topping1 != ""):
+            top1 = Topping.objects.get(name = topping1)
+            top1.save()
+
+            pizza.toppings.add(top1)
+
+        if(topping2 != ""):
+            top2 = Topping.objects.get(name = topping2)
+            top2.save()
+
+            pizza.toppings.add(top2)
+
+        if(topping3 != ""):
+            top3 = Topping.objects.get(name = topping3)
+            top3.save()
+
+            pizza.toppings.add(top3)
 
         orderItem = OrderItem(pizza = pizza)
+        orderItem.save()
 
         order = Order(user = request.user, progress = 0)
+        order.save()
+
         order.orders.add(orderItem)
 
         print(order)
 
-        return JsonResponse({"success" : "true"})
+        return JsonResponse({"success" : "true", "orderitem":order.__str__()})
 
+
+def cart_view(request):
+    user = request.user
+
+    context = {
+        'user' : user,
+        "orders" : Order.objects.filter(user = user)
+    }
+
+    print(context)
+    return render(request,"orders/cart.html", context)
 
 def shop_view(request):
 
